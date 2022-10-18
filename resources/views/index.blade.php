@@ -22,23 +22,19 @@
           <p>「{{$user->name}}」でログイン中</p>
         @else
         <a href="/login">ログイン</a>
-  　　　 <a href="/register">登録</a>
         @endif
-            <input class="btn_logout" type="submit" value="ログアウト">
+        <input class="btn_logout" type="submit" value="ログアウト">
           </form>
         </div>
         <a class="btn_search" href="/find">タスク検索</a>
-        <form action="/create{task_name,tag_id}" method="post" class="flex">
+        <form action="/create{task_name,tag_id,user_id}" method="post" class="flex">
         @csrf
         <input class="border" type="text" name="task_name">
-        <select name="tag_id" class="select-tag">
-          <option value=""></option>
-          <option value="1">家事</option>
-          <option value="2">勉強</option>
-          <option value="3">運動</option>
-          <option value="4">食事</option>
-          <option value="5">移動</option>
-        </select>
+            <select name="tag_id" class="select-tag">
+              @foreach($tags as $tag)
+              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+              @endforeach
+            </select>
         <input class="plus" type="submit" name="buttton_task" value="追加">
         @error('task_name')
         <p>{{$message}}</p>
@@ -63,13 +59,10 @@
             <input class="task" type="text" name="task_name" size="50" value={{$index->task_name}}>
           </td>
           <td>
-            <select name="tag_id" class="select-tag">
-              <option value=""></option>
-              <option value="1">家事</option>
-              <option value="2">勉強</option>
-              <option value="3">運動</option>
-              <option value="4">食事</option>
-              <option value="5">移動</option>
+             <select name="tag_id" class="select-tag">
+              @foreach($tags as $tag)
+              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+              @endforeach
             </select>
           <td>
             <button class="upd">更新</button>

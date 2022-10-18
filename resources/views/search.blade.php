@@ -24,17 +24,14 @@
             <input class="btn_logout" type="submit" value="ログアウト">
           </form>
         </div>
-        <form action="/find" method="get" class="flex">
+        <form action="/find{task_name" method="get" class="flex">
           @csrf
           <input class="border" type="text" name="task_name">
           <select name="tag_id" class="select-tag">
-            <option value=""></option>
-            <option value="1">家事</option>
-            <option value="2">勉強</option>
-            <option value="3">運動</option>
-            <option value="4">食事</option>
-            <option value="5">移動</option>
-          </select>
+              @foreach($tags as $tag)
+              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+              @endforeach
+            </select>
           <input class="plus" type="submit" name="buttton_search" value="検索">
           @error('task_name')
           <p>{{$message}}</p>
@@ -51,22 +48,20 @@
         </tr>
         @foreach($todos as $todo)
         <tr>
-          <td></td>
+          <td>
+            {{$user->created_at}}
+        </td>
           <td>
             <form action="/update" method="post" class="Upd_form">
               @csrf
-              <input class="task" type="text" name="task_name" size="50" value={{$todo->task_name}}>
+            <input class="task" type="text" name="task_name" size="50" value={{$todo->task_name}}
           </td>
           <td>
-            <select name="tag_id" class="select-tag" value={{$todo->tag_id}}>
-              <option value="0"></option>
-              <option value="1">家事</option>
-              <option value="2">勉強</option>
-              <option value="3">運動</option>
-              <option value="4">食事</option>
-              <option value="5">移動</option>
-            </select>
+            <select name="tag_id" class="select-tag">
+              @foreach($tags as $tag)
+              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
               @endforeach
+            </select>
           <td>
             <button class="upd">更新</button>
           </td>
@@ -78,6 +73,7 @@
             </form>
           </td>
         </tr>
+      @endforeach
       </table>
       <a class="btn_back" href="/home">戻る</a>
     </div>

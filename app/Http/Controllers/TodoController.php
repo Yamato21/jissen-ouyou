@@ -15,11 +15,13 @@ class TodoController extends Controller
     {
         $indexs = todo::all();
         $user = Auth::user();
+        $tags = Tag::all();
         return view(
             'index',
             [
                 'indexs' => $indexs,
-                'user' => $user
+                'user' => $user,
+                'tags' => $tags
             ]
         );
     }
@@ -28,7 +30,6 @@ class TodoController extends Controller
     {
         $form = $request->all();
         $form['user_id'] = Auth::id();
-        // dd($form);
         todo::create($form);
         return redirect('/home');
     }
@@ -52,8 +53,13 @@ class TodoController extends Controller
     {
         $todos = Todo::all();
         $tags = Tag::all();
+        $user = Auth::user();
+        $time =  $request->input('created_at');
 
-        return view('search', ['todos' => $todos, 'tags' => $tags]);
+        return view('search', 
+        ['todos' => $todos,
+        'tags' => $tags, 'user' => $user,
+         'time' => $time]);
     }
 
     public function find(Request $request)
@@ -63,7 +69,6 @@ class TodoController extends Controller
 
         $todo = Todo::query();
         $tags = Tag::all();
-
         $user = Auth::user();
 
         if ($task_name !== null) {
@@ -74,6 +79,6 @@ class TodoController extends Controller
         }
         $todos = $todo->get();
 
-        return view('search', ['todos' => $todos, 'tags' => $tags]);
+        return view('search', ['todos' => $todos, 'tags' => $tags, 'user' => $user ]);
     }
 }
