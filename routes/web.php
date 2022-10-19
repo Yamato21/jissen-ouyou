@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\todo;
 use App\http\Controllers\todoController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\SessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [todoController::class, 'index']);
+Route::get('/home', [todoController::class, 'index'])->middleware('auth');
 Route::post('/create{task_name,tag_id}', [todoController::class, 'create']);
 Route::post('/update{id}', [todoController::class, 'update']);
 Route::post('/delete{id}', [todoController::class, 'delete']);

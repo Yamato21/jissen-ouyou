@@ -25,6 +25,7 @@ class todoRequest extends FormRequest
     {
         return [
 			'task_name' => 'required|max:20',
+            'tag_id' => 'required'
         ];
     }
 
@@ -32,7 +33,8 @@ class todoRequest extends FormRequest
     {
         return [
             'task_name.required' => '必須',
-            'task_name.max' => '20文字以内'
+            'task_name.max' => '20文字以内',
+             'tag_id.required' => '必須'
         ];
     }
 }

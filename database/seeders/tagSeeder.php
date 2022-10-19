@@ -15,9 +15,6 @@ class tagSeeder extends Seeder
      */
     public function run()
     {
-      Tag::create([
-        'tag_name' =>'']);
-        
        Tag::create([
         'tag_name' => '家事']);
     

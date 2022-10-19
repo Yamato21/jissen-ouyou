@@ -18,12 +18,14 @@
       <div class="top">
         <div class="header">
           <h1 class="title">タスク検索</h1>
+           <div class="head">
+          <p class ="login">「{{$user->name}}」でログイン中</p>
           <form method="post" action="/logout">
             @csrf
-            <p class="login"></p>
-            <input class="btn_logout" type="submit" value="ログアウト">
+        <input class="btn_logout" type="submit" value="ログアウト">
           </form>
-        </div>
+          </div>
+          </div>
         <form action="/find{task_name,tag_id}" method="get" class="flex">
           @csrf
           <input class="border" type="text" name="task_name">
@@ -54,7 +56,7 @@
           <td>
             <form action="/update{{$todo->id}}" method="post">
               @csrf
-            <input class="task" type="text" name="task_name" size="50" value={{$todo->task_name}}
+            <input class="task" type="text" name="task_name"  value={{$todo->task_name}}
           </td>
           <td>
             <select name="tag_id" class="select-tag">

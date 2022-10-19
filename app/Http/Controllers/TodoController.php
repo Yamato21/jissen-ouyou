@@ -69,17 +69,18 @@ class TodoController extends Controller
         $task_name = $request->input('task_name');
         $tag_id = $request->input('tag_id');
 
-        $todos = Todo::all();
+        $todo = Todo::query();
         $tags = Tag::all();
         $user = Auth::user();
 
         if ($task_name !== null) {
-            $todos->where('task_name', 'like', '%' . $task_name . '%');
+            $todo->where('task_name', 'like', '%' . $task_name . '%');
         }
         if ($tag_id !== null) {
-            $todos->where('tag_id', $tag_id);
+            $todo->where('tag_id', $tag_id);
         }
         
+        $todos = $todo->get();
 
         return view('search', ['todos' => $todos, 'tags' => $tags, 'user' => $user  ]);
     }
