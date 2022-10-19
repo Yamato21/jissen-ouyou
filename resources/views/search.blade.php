@@ -24,13 +24,13 @@
             <input class="btn_logout" type="submit" value="ログアウト">
           </form>
         </div>
-        <form action="/find{task_name" method="get" class="flex">
+        <form action="/find{task_name,tag_id}" method="get" class="flex">
           @csrf
           <input class="border" type="text" name="task_name">
-          <select name="tag_id" class="select-tag">
-              @foreach($tags as $tag)
-              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
-              @endforeach
+           <select name="tag_id" class="select-tag">
+           @foreach($tags as $tag)
+             <option value="{{ $tag->id }}" selected="selected">{{ $tag->tag_name }}</option>
+             @endforeach
             </select>
           <input class="plus" type="submit" name="buttton_search" value="検索">
           @error('task_name')
@@ -49,17 +49,21 @@
         @foreach($todos as $todo)
         <tr>
           <td>
-            {{$user->created_at}}
+            {{$todo->created_at}}
         </td>
           <td>
-            <form action="/update" method="post" class="Upd_form">
+            <form action="/update{{$todo->id}}" method="post">
               @csrf
             <input class="task" type="text" name="task_name" size="50" value={{$todo->task_name}}
           </td>
           <td>
             <select name="tag_id" class="select-tag">
               @foreach($tags as $tag)
+              @if ($tag->id === $todo->tag_id)
+             <option value="{{ $tag->id }}" selected="selected">{{ $tag->tag_name }}</option>
+               @else
               <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+              @endif
               @endforeach
             </select>
           <td>
@@ -67,7 +71,7 @@
           </td>
           </form>
           <td>
-            <form action="/delete" method="post">
+            <form action="/delete{$todo->id}}" method="post">
               @csrf
               <button class="del">削除</button>
             </form>

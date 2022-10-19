@@ -13,7 +13,7 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $indexs = todo::all();
+        $indexs = Todo::all();
         $user = Auth::user();
         $tags = Tag::all();
         return view(
@@ -21,7 +21,7 @@ class TodoController extends Controller
             [
                 'indexs' => $indexs,
                 'user' => $user,
-                'tags' => $tags
+                'tags' => $tags,
             ]
         );
     }
@@ -51,14 +51,16 @@ class TodoController extends Controller
 
     public function search(Request $request)
     {
-        $todos = Todo::all();
         $tags = Tag::all();
         $user = Auth::user();
         $time =  $request->input('created_at');
+        $todos = [];
 
         return view('search', 
-        ['todos' => $todos,
-        'tags' => $tags, 'user' => $user,
+        [
+        'todos' => $todos,
+        'tags' => $tags, 
+        'user' => $user,
          'time' => $time]);
     }
 
@@ -67,18 +69,18 @@ class TodoController extends Controller
         $task_name = $request->input('task_name');
         $tag_id = $request->input('tag_id');
 
-        $todo = Todo::query();
+        $todos = Todo::all();
         $tags = Tag::all();
         $user = Auth::user();
 
         if ($task_name !== null) {
-            $todo->where('task_name', 'like', '%' . $task_name . '%');
+            $todos->where('task_name', 'like', '%' . $task_name . '%');
         }
         if ($tag_id !== null) {
-            $todo->where('tag_id', $tag_id);
+            $todos->where('tag_id', $tag_id);
         }
-        $todos = $todo->get();
+        
 
-        return view('search', ['todos' => $todos, 'tags' => $tags, 'user' => $user ]);
+        return view('search', ['todos' => $todos, 'tags' => $tags, 'user' => $user  ]);
     }
 }

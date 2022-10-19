@@ -27,14 +27,13 @@
           </form>
         </div>
         <a class="btn_search" href="/find">タスク検索</a>
-        <form action="/create{task_name,tag_id,user_id}" method="post" class="flex">
+        <form action="/create{task_name,tag_id}" method="post" class="flex">
         @csrf
         <input class="border" type="text" name="task_name">
             <select name="tag_id" class="select-tag">
               @foreach($tags as $tag)
-              <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+             <option value="{{ $tag->id }}" selected="selected">{{ $tag->tag_name }}</option>
               @endforeach
-            </select>
         <input class="plus" type="submit" name="buttton_task" value="追加">
         @error('task_name')
         <p>{{$message}}</p>
@@ -61,7 +60,11 @@
           <td>
              <select name="tag_id" class="select-tag">
               @foreach($tags as $tag)
+                @if ($tag->id === $index->tag_id)
+             <option value="{{ $tag->id }}" selected="selected">{{ $tag->tag_name }}</option>
+               @else
               <option value="{{$tag->id}}">{{$tag->tag_name}}</option>
+              @endif
               @endforeach
             </select>
           <td>

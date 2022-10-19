@@ -21,10 +21,10 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [todoController::class, 'index']);
-Route::post('/create{task_name,tag_id,user_id}', [todoController::class, 'create']);
+Route::post('/create{task_name,tag_id}', [todoController::class, 'create']);
 Route::post('/update{id}', [todoController::class, 'update']);
 Route::post('/delete{id}', [todoController::class, 'delete']);
-Route::get('/find/{task}/{tag}', [todoController::class, 'find']);
+Route::get('/find{task_name,tag_id}', [todoController::class, 'find']);
 Route::get('/find', [todoController::class, 'search']);
 
 Route::get('/dashboard', function () {
