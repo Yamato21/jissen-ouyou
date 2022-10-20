@@ -30,8 +30,9 @@
           @csrf
           <input class="border" type="text" name="task_name">
            <select name="tag_id" class="select-tag">
+            <option value="" selected="selected" value=""></option>
            @foreach($tags as $tag)
-             <option value="{{ $tag->id }}" selected="selected">{{ $tag->tag_name }}</option>
+             <option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
              @endforeach
             </select>
           <input class="plus" type="submit" name="buttton_search" value="検索">
